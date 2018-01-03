@@ -17,8 +17,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="22sp"
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/black"
         android:text="Palo Alto"
+        android:textStyle="bold"
         android:layout_gravity="bottom | end"
         android:layout_marginEnd="8dp"
         android:gravity="center"/>

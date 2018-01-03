@@ -2,6 +2,7 @@ package com.example.achiose.airwatch.building.presenter
 
 import android.support.v7.widget.LinearLayoutManager
 import com.example.achiose.airwatch.MeetingRoomApiService
+import com.example.achiose.airwatch.building.contract.BuildingContract
 import com.example.achiose.airwatch.building.model.Building
 import com.example.achiose.airwatch.building.view.adapter.BuildingsAdapter
 import retrofit2.Call

@@ -1,4 +1,4 @@
-package com.example.achiose.airwatch.building.presenter
+package com.example.achiose.airwatch.building.contract
 
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView

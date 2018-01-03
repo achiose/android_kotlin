@@ -3,6 +3,7 @@ package com.example.achiose.airwatch.building.presenter
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
+import com.example.achiose.airwatch.building.contract.LocationContract
 import com.example.achiose.airwatch.building.model.Location
 import com.example.achiose.airwatch.building.view.adapter.LocationsAdapter
 
@@ -32,13 +33,13 @@ class LocationPresenter(val view: LocationContract.View) : LocationContract.Pres
     override fun setupSearchView(searchView: SearchView) {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(newText: String?): Boolean {
-                newText?.let { value ->
-                    var list = locationList.filter {
-                        it.name.toLowerCase().contains(value.toLowerCase())
-                    } as MutableList<Location>
-                    if (list.size == 0) list.add(Location("Chicago", "http://localhost:3001/city/chicago/image"))
-                    view.updateLocationItens(list)
-                }
+//                newText?.let { value ->
+//                    var list = locationList.filter {
+//                        it.name.toLowerCase().contains(value.toLowerCase())
+//                    } as MutableList<Location>
+//                    if (list.size == 0) list.add(Location(newText, "http://localhost:3001/city/chicago/image"))
+//                    view.updateLocationItens(list)
+//                }
 
                 return true
             }
@@ -48,7 +49,7 @@ class LocationPresenter(val view: LocationContract.View) : LocationContract.Pres
                     var list = locationList.filter {
                         it.name.toLowerCase().contains(value.toLowerCase())
                     } as MutableList<Location>
-                    if (list.size == 0) list.add(Location("Chicago", "http://localhost:3001/city/chicago/image"))
+                    if (list.size == 0) list.add(Location(query, "http://localhost:3001/city/chicago/image"))
                     view.updateLocationItens(list)
                 }
 

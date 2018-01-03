@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import com.example.achiose.airwatch.R
 import com.example.achiose.airwatch.building.view.adapter.LocationsAdapter
 import com.example.achiose.airwatch.building.model.Location
-import com.example.achiose.airwatch.building.presenter.LocationContract
+import com.example.achiose.airwatch.building.contract.LocationContract
 import com.example.achiose.airwatch.building.presenter.LocationPresenter
 import kotlinx.android.synthetic.main.location_fragment_layout.view.*
 import kotlinx.android.synthetic.main.location_list_item.view.*

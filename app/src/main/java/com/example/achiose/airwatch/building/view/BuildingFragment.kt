@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.example.achiose.airwatch.R
 import com.example.achiose.airwatch.building.model.Building
-import com.example.achiose.airwatch.building.presenter.BuildingContract
+import com.example.achiose.airwatch.building.contract.BuildingContract
 import com.example.achiose.airwatch.building.presenter.BuildingPresenter
 import kotlinx.android.synthetic.main.building_fragment_layout.*
 import kotlinx.android.synthetic.main.building_fragment_layout.view.*
