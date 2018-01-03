@@ -3,17 +3,16 @@ package com.example.achiose.airwatch.building.view
 import android.app.Fragment
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.achiose.airwatch.R
-import com.example.achiose.airwatch.building.view.adapter.BuildingsAdapter
 import com.example.achiose.airwatch.building.model.Building
 import com.example.achiose.airwatch.building.presenter.BuildingContract
 import com.example.achiose.airwatch.building.presenter.BuildingPresenter
+import kotlinx.android.synthetic.main.building_fragment_layout.*
 import kotlinx.android.synthetic.main.building_fragment_layout.view.*
 
 /**
@@ -29,12 +28,14 @@ class BuildingFragment : Fragment(), BuildingContract.View {
         fun newInstance(location : String): BuildingFragment {
             val fragment = BuildingFragment()
             val bundle = Bundle()
-            bundle.putString("location", location)
+            bundle.putString(LOCATION_BUNDLE_KEY, location)
 
             fragment.arguments = bundle
 
             return fragment
         }
+
+        val LOCATION_BUNDLE_KEY = "location_bundle_key"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,55 +47,41 @@ class BuildingFragment : Fragment(), BuildingContract.View {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
         rootView = inflater!!.inflate(R.layout.building_fragment_layout, container, false)
 
-        rootView.recycler_view.layoutManager = LinearLayoutManager(activity)
-
-        (activity as AppCompatActivity).supportActionBar?.let {
-            it.setHomeButtonEnabled(true)
-            it.setDisplayShowHomeEnabled(true)
-        }
-
-        arguments?.let({
-            updateContent(it.get("location") as String)
-        })
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         return rootView
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        arguments?.let({
+            presenter.fetchBuilding(it.get(LOCATION_BUNDLE_KEY) as String)
+        })
+    }
+
     override fun setPresenter(presenter: BuildingContract.Presenter) {
         this.presenter = presenter
+    }
+
+    override fun onBuildingClicked(building: Building) {
+        Toast.makeText(activity, building.name + " clicked", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showError(error: String) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    override fun showProgressBar(show: Boolean) {
+        building_progress.visibility = if (show) View.VISIBLE else View.GONE
+    }
+
+    override fun recyclerView(): RecyclerView {
+        return rootView.recycler_view;
+    }
+
     fun updateContent(location : String) {
-        rootView.recycler_view.adapter = BuildingsAdapter(populateBuildingList(location)) {
-            Toast.makeText(activity, it.name, Toast.LENGTH_SHORT).show()
-        }
+        presenter.fetchBuilding(location)
     }
-
-    fun populateBuildingList(location : String) : ArrayList<Building> {
-        val buildingList = ArrayList<Building>()
-
-//        buildingList.add(Building(location))
-//        buildingList.add(Building("American Airlines"))
-//        buildingList.add(Building("Madison Square Garden"))
-//        buildingList.add(Building("Oracle Arena"))
-//        buildingList.add(Building("TD Garden"))
-//        buildingList.add(Building("Staples Center"))
-//        buildingList.add(Building("Arena Corinthians"))
-
-        return buildingList
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        item?.let {
-            when (it.itemId) {
-                android.R.id.home ->  (activity as AppCompatActivity).supportFragmentManager.popBackStack()
-            }
-        }
-
-        return super.onOptionsItemSelected(item)
-    }
-
-
 }
 

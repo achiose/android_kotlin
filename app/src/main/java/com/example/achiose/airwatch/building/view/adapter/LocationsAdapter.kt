@@ -6,12 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.achiose.airwatch.R
 import com.example.achiose.airwatch.building.model.Location
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.location_list_item.view.*
+import com.example.achiose.airwatch.grayScale
 
 /**
  * Created by achiose on 15/12/17.
  */
-class LocationsAdapter(private val locationList : List<Location>, private val locationClicked : (Location) -> Unit) :
+class LocationsAdapter(private var locationList : MutableList<Location>, private val locationClicked : (Location, Int) -> Unit) :
         RecyclerView.Adapter<LocationsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -25,14 +28,32 @@ class LocationsAdapter(private val locationList : List<Location>, private val lo
 
     override fun getItemCount() = locationList.size
 
-    class ViewHolder(view: View, private val itemClick: (Location) -> Unit)
+    fun updateItens(locationList : List<Location>) {
+        this.locationList.clear()
+        this.locationList.addAll(locationList)
+        notifyDataSetChanged()
+    }
+
+
+    class ViewHolder(view: View, private val itemClick: (Location, Int) -> Unit)
         : RecyclerView.ViewHolder(view) {
 
         fun bindBuilding(location : Location) {
             with(location) {
-                itemView.location_name.text = location.name
+                itemView.location_name.text = name
+                Picasso
+                        .with(itemView.context)
+                        .load(imageUrl)
+                        .into(itemView.location_image, object : Callback {
+                            override fun onError() {
+                            }
+
+                            override fun onSuccess() {
+                                itemView.location_image.grayScale(true)
+                            }
+                        })
                 itemView.setOnClickListener {
-                    itemClick(this)
+                    itemClick(this, adapterPosition)
                 }
             }
         }

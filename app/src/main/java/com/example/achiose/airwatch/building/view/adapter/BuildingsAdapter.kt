@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import com.example.achiose.airwatch.R
 import com.example.achiose.airwatch.building.model.Building
 import kotlinx.android.synthetic.main.building_list_item.view.*
+import com.example.achiose.airwatch.booleanValue
+import com.squareup.picasso.Picasso
 
 /**
  * Created by achiose on 15/12/17.
@@ -30,7 +32,13 @@ class BuildingsAdapter(private val buildingsList : List<Building>, private val b
 
         fun bindBuilding(building : Building) {
             with(building) {
-                itemView.building_name.text = building.name
+                itemView.building_name.text = name
+                itemView.building_location.text = location
+                itemView.building_room_text.text = roomCountToString()
+                itemView.building_flag_parking.visibility = if (flag_parking.booleanValue()) View.VISIBLE else View.GONE
+                itemView.building_flag_presentation.visibility = if (flag_presentation.booleanValue()) View.VISIBLE else View.GONE
+                itemView.building_flag_parking.visibility = if (flag_wifi.booleanValue()) View.VISIBLE else View.GONE
+                Picasso.with(itemView.context).load(url).into(itemView.building_image)
                 itemView.setOnClickListener { itemClick(this) }
             }
         }

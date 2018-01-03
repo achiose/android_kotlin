@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_green_dark"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
     
     <android.support.v7.widget.SearchView
         android:id="@+id/location_search_view"
         android:layout_width="match_parent"
-        android:layout_height="40dp"/>
+        android:layout_height="40dp"
+        app:queryHint="Search" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/location_recycler_view"
